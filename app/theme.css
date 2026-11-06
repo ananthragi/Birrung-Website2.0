@@ -1,0 +1,167 @@
+/* Logo orange #F58634 on near-black, with a clean warm white page. */
+
+:root {
+  --night: #14110f;
+  --night-2: #241c18;
+  --paper: #fff8f4;
+  --sand: #f8eee6;
+  --ivory: #ffffff;
+  --ink: #1c1412;
+  --muted: #5e4c44;
+  --line: rgba(28, 20, 18, 0.1);
+  --gold: #f58634;
+  --gold-deep: #c65a12;
+  --euca: #d4651a;
+  --clay: #9a3e16;
+  --ivory-dim: rgba(255, 248, 244, 0.78);
+  --shadow: 0 22px 60px rgba(20, 17, 15, 0.12);
+}
+
+body {
+  background:
+    radial-gradient(900px 420px at 0% -10%, rgba(245, 134, 52, 0.08), transparent 52%),
+    var(--paper);
+}
+
+::selection { background: #f58634; color: #14110f; }
+
+.logo img,
+.logo-video {
+  height: 80px;
+  width: auto;
+  max-width: none;
+  display: block;
+  object-fit: contain;
+}
+
+.logo-video {
+  position: relative;
+  display: inline-grid;
+  align-items: center;
+  width: 121px;
+  height: 80px;
+}
+
+.logo-video .logo-fallback,
+.logo-video canvas {
+  grid-area: 1 / 1;
+  display: block;
+  object-fit: contain;
+}
+
+.logo-video .logo-fallback {
+  height: 100%;
+  width: 121px;
+  max-width: none;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.logo-video canvas {
+  height: 80px;
+  width: 121px;
+  max-width: none;
+}
+
+.logo-video.is-ready .logo-fallback {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logo-video.is-ready canvas {
+  opacity: 1;
+}
+
+.logo-video canvas {
+  opacity: 0;
+}
+
+.logo-video-src {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-footer .logo img,
+.site-footer .logo-video,
+.site-footer .logo-video .logo-fallback,
+.site-footer .logo-video canvas { height: 72px; }
+
+.site-header.is-stuck,
+.site-header.is-open {
+  background: rgba(255, 248, 244, 0.94);
+}
+
+.hero {
+  background:
+    radial-gradient(720px 520px at 82% 8%, rgba(245, 134, 52, 0.42), transparent 58%),
+    radial-gradient(480px 320px at 0% 100%, rgba(245, 134, 52, 0.12), transparent 55%),
+    var(--night);
+}
+
+.hero-copy { color: rgba(255, 246, 238, 0.88); }
+
+.hero .eyebrow,
+.on-night .eyebrow,
+.hero h1 em,
+.hero-note a,
+.contact-links span,
+.credits a,
+.site-footer h3,
+.site-nav a:hover,
+.site-nav .nav-parent:hover {
+  color: #f58634;
+}
+
+.btn-gold { color: #1a120e; }
+.btn-gold:hover { background: #e07020; }
+.btn-ink:hover { background: #241c18; }
+
+.bezel { background: #1e1816; }
+.bezel-bar span { background: #5c463c; }
+.glass { background: #2a211c; }
+
+.status-chip i,
+.live i,
+.net li::after {
+  background: #f58634;
+}
+
+.drop {
+  border-color: rgba(42, 24, 18, 0.22);
+  background:
+    linear-gradient(180deg, rgba(245, 134, 52, 0.1), transparent 70%),
+    #fbf6f1;
+}
+
+.net li {
+  background:
+    linear-gradient(180deg, rgba(255, 249, 244, 0.06), transparent 46%),
+    #2c1a14;
+}
+
+.net li::before,
+.net li.wait::before {
+  background: linear-gradient(to top, rgba(28, 14, 8, 0.92) 0%, rgba(36, 20, 14, 0.62) 46%, rgba(36, 20, 14, 0.48) 100%);
+}
+
+.net li.wait {
+  box-shadow: inset 0 0 0 1.5px rgba(255, 228, 204, 0.95);
+}
+
+.net li.wait span { color: #ffe7c8; }
+.net li.wait::after { background: #ffe7c8; }
+
+.venue-card { background: #2c1a14; }
+
+.avatar {
+  background: #4a2c20;
+  color: #ffd3ae;
+}
+
+.site-header.is-stuck .site-nav a:hover,
+.site-header.is-stuck .site-nav .nav-parent:hover,
+.site-header.is-open .site-nav a:hover,
+.site-header.is-open .site-nav .nav-parent:hover { color: var(--euca); }
