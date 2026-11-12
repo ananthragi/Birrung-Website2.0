@@ -7,13 +7,14 @@ import { OpenButton } from "@/components/open-button";
 import { WhyBirrung } from "@/components/why-birrung";
 import { CountUp } from "@/components/count-up";
 import { ReviewSlider } from "@/components/review-slider";
+import { HardwareSection } from "@/components/hardware-section";
+import { SolutionSection } from "@/components/solution-section";
 import { Check } from "@/components/sprite";
-import { screens, venues } from "@/lib/media";
+import { venues } from "@/lib/media";
+import { isSolutionShown } from "@/lib/site";
 import { address, email, phoneDisplay, phoneHref } from "@/lib/site";
 
 const StepShow = dynamic(() => import("@/components/step-show").then((mod) => mod.StepShow));
-const UploadSources = dynamic(() => import("@/components/upload-sources").then((mod) => mod.UploadSources));
-const PeaceScene = dynamic(() => import("@/components/peace-scene").then((mod) => mod.PeaceScene));
 
 const proof = [
   ["3×", "Faster than traditional methods"],
@@ -131,9 +132,17 @@ export function HomePage() {
               <OpenButton className="btn btn-gold" modal="trial">
                 Free Demo
               </OpenButton>
-              <OpenButton className="btn btn-line" modal="demo">
+              <OpenButton className="btn btn-line hero-cta-desktop" modal="demo">
                 Request a demo
               </OpenButton>
+              <a
+                className="btn btn-line hero-cta-mobile"
+                href="https://birrung.com.au/login"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Log in
+              </a>
             </div>
             <p className="hero-note">
               14-day free trial. No credit card required. <a href="#how">See how it works</a>
@@ -156,201 +165,9 @@ export function HomePage() {
         </div>
       </Reveal>
 
-      <Reveal as="section" className="section" id="hardware">
-        <div className="wrap">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">
-                <i /> Any screen you own
-              </p>
-              <h2>Hardware agnostic</h2>
-            </div>
-            {/* <p className="lede">Nothing new to buy. Nothing proprietary to install.</p> */}
-          </div>
-          <div className="feature-pair">
-            <article className="tile tile-feature tile-hardware">
-              <div className="device-stage" aria-hidden="true">
-                <div className="device">
-                  <div className="screen-face screen-menu">
-                    <b>Lunch menu</b>
-                    <span><i /><i /></span>
-                    <span><i /><i /></span>
-                    <span><i /><i /></span>
-                  </div>
-                  <span>TCL</span>
-                  <em>On</em>
-                </div>
-                <div className="device">
-                  <div className="screen-face screen-poster">
-                    <i className="poster" />
-                    <b>Today&apos;s special</b>
-                    <i />
-                  </div>
-                  <span>Hisense</span>
-                  <em>On</em>
-                </div>
-                <div className="device">
-                  <div className="screen-face screen-agenda">
-                    <b>Town hall</b>
-                    <span><span className="tick" /><i /></span>
-                    <span><span className="tick" /><i /></span>
-                    <span><span className="tick" /><i /></span>
-                  </div>
-                  <span>Samsung</span>
-                  <em>On</em>
-                </div>
-                <div className="device">
-                  <div className="screen-face screen-player">
-                    <i className="playhead" />
-                    <b>Live match</b>
-                    <i />
-                  </div>
-                  <span>LG</span>
-                  <em>On</em>
-                </div>
-              </div>
-              <ul className="feature-points">
-                <li>Any screen you own</li>
-                <li>Nothing expensive to buy</li>
-              </ul>
-              <div>
-                <p className="tile-kicker">Already have TVs?</p>
-                <h3>Works on any screen.</h3>
-                <p>Birrung  lets you play the content on any smart TV or commercial screens. No need to purchase any specialised hardware. Of course we can provide media players if required and it has its advantages. However,  you can use what you already have and start  displaying  your content</p>
-              </div>
-            </article>
-            <article className="tile tile-feature tile-peace">
-              <PeaceScene />
-              <div>
-                <h3 className="peace-heading"><span>Works Offline, Peace of Mind</span></h3>
-                <p className="peace-line">Set it once, leave it to Birrung</p>
-                <p>
-                  Poor Wi-Fi coverage, or no internet at all? No problem, because<b> Birrung works offline</b>.
-                  <br />
-                  Once your activation code is synced, leave the rest to Birrung. Your screens keep playing, even when your Wi-Fi takes a coffee break. And as soon as you’re back online, Birrung picks up the latest updates automatically.
-                </p>
-                <p className="peace-note">*Offline playback is subject to compatible screens or media players.</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </Reveal>
+      <HardwareSection />
 
-      <Reveal as="section" className="section" id="solution">
-        <div className="wrap">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">
-                <i /> Solution
-              </p>
-              <h2>Your campaign, your rules.</h2>
-            </div>
-            <p className="lede">Everything you need to manage, organize, and deploy video advertising campaigns. Launch when you are ready.</p>
-          </div>
-          <div className="bento bento-tools">
-            <article className="tile tile-upload">
-              <div>
-                <h3>Upload your content</h3>
-                <p>Upload your content, create a playlist, run a YouTube link, or publish a third-party website.</p>
-              </div>
-              <div className="tile-ui" aria-hidden="true">
-                <div className="drop">
-                  <div>
-                    {/* <div className="drop-copy">
-                      <strong>Add your images or videos from your local drive. Just drag and drop. Ready, set, go.</strong>
-                    </div> */}
-                    <UploadSources />
-                  </div>
-                </div>
-              </div>
-
-            </article>
-          </div>
-          <article className="tile tile-feature tile-analytics campaign-analytics" id="analytics">
-            <div>
-              <p className="tile-kicker">Realtime analytics</p>
-              <h3>Know the moment a screen slips.</h3>
-              <p>Live status for every display and every campaign. One clear alert when something needs a look.</p>
-            </div>
-            <div className="analytics-stage" aria-hidden="true">
-              <div className="stat-row">
-                <span>
-                  <b>7</b> live
-                </span>
-                <span className="is-alert">
-                  <b>1</b> alert
-                </span>
-                <span>
-                  <b>0</b> delay
-                </span>
-              </div>
-              <svg className="spark spark-lg" viewBox="0 0 320 110" preserveAspectRatio="none" fill="none">
-                <path className="spark-fill" d="M4 82 48 74 86 76 128 46 176 54 214 28 262 36 316 14 V110 H4 Z" fill="rgba(245,134,52,0.18)" />
-                <path className="spark-line" d="M4 82 48 74 86 76 128 46 176 54 214 28 262 36 316 14" stroke="#f58634" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                <circle className="spark-dot" cx="316" cy="14" r="5" fill="#f58634" />
-              </svg>
-              <div className="alert-row alert-pop">
-                <i /> Lobby screen needs a look <small>Just now</small>
-              </div>
-            </div>
-          </article>
-          <div className="bento bento-rest">
-            <article className="tile tile-schedule">
-              <ul className="slots" aria-hidden="true">
-                <li>
-                  <b>Breakfast</b>
-                  <span>6:00</span>
-                </li>
-                <li>
-                  <b>Lunch</b>
-                  <span>11:00</span>
-                </li>
-                <li>
-                  <b>Dinner</b>
-                  <span>17:00</span>
-                </li>
-              </ul>
-              <div>
-                <h3>Schedule or day part</h3>
-                <p>Schedule content the way you wish to publish. Automatically change from breakfast, lunch, and dinner without lifting a finger.</p>
-              </div>
-            </article>
-            <article className="tile tile-central">
-              <div>
-                <h3>Centralised management</h3>
-                <p>Monitor all your screens from a single dashboard. All at your fingertips.</p>
-              </div>
-              <div>
-                <div className="dash-top">
-                  <strong>Network</strong>
-                  <span className="live">
-                    <i /> 7 online · 1 offline
-                  </span>
-                </div>
-                <ul className="net-board">
-                  {screens.map((screen) => (
-                    <li key={screen.name} className={screen.online ? "is-on" : "is-off"}>
-                      <span className="net-face" aria-hidden="true">
-                        <b />
-                        <b />
-                        <b />
-                      </span>
-                      <span className="net-copy">
-                        <em>{screen.name}</em>
-                        <small>{screen.playing}</small>
-                      </span>
-                      <span className="net-state">
-                        <i />
-                        {screen.online ? "Online" : "Offline"}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          </div>
-        </div>
-      </Reveal>
+      <SolutionSection />
 
       <Reveal as="section" className="section metrics" id="metrics" labelledBy="metrics-title">
         <div className="wrap">
@@ -425,23 +242,49 @@ export function HomePage() {
             <p className="lede">Retail stores, restaurants, corporate offices, stadiums and places of worship all use screens differently. Birrung adapts to how your venue works. Promote specials, welcome visitors or share service times, and schedule, update and manage it all remotely, from a browser.</p>
           </div>
           <div className="venue-grid">
-            {venues.map((venue) => (
-              <figure className={`venue-card ${venue.className}`} key={venue.title}>
-                <Image
-                  src={venue.image}
-                  alt={venue.alt}
-                  fill
-                  loading="lazy"
-                  placeholder="blur"
-                  quality={70}
-                  sizes="(min-width: 900px) 380px, 100vw"
-                />
-                <div className="venue-copy">
-                  <h3>{venue.title}</h3>
-                  <p>{venue.text}</p>
-                </div>
-              </figure>
-            ))}
+            {venues.map((venue) => {
+              const linked = isSolutionShown(venue.slug);
+              const media = (
+                <>
+                  <Image
+                    src={venue.image}
+                    alt={venue.alt}
+                    fill
+                    loading="lazy"
+                    placeholder="blur"
+                    quality={70}
+                    sizes="(min-width: 900px) 380px, 100vw"
+                  />
+                  <div className="venue-copy">
+                    <h3>
+                      {venue.title}
+                      {linked ? (
+                        <span className="venue-go" aria-hidden="true">
+                          <svg viewBox="0 0 24 24">
+                            <path d="M8 16 16 8M10 8h6v6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </span>
+                      ) : null}
+                    </h3>
+                    <p>{venue.text}</p>
+                  </div>
+                </>
+              );
+
+              if (linked) {
+                return (
+                  <a className={`venue-card ${venue.className}`} href={venue.href} key={venue.slug}>
+                    {media}
+                  </a>
+                );
+              }
+
+              return (
+                <article className={`venue-card ${venue.className} is-static`} key={venue.slug}>
+                  {media}
+                </article>
+              );
+            })}
           </div>
         </div>
       </Reveal>

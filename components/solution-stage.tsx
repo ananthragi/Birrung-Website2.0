@@ -27,8 +27,8 @@ export function SolutionStage({ industry }: { industry: Industry }) {
   }, [boards.length]);
 
   const board = boards[index];
-  const mainImage = index % 2 === 0 ? industry.image : industry.stage.side;
-  const sideImage = index % 2 === 0 ? industry.stage.side : industry.image;
+  const mainImage = board.image ?? (index % 2 === 0 ? industry.image : industry.stage.side);
+  const sideImage = board.side ?? (index % 2 === 0 ? industry.stage.side : industry.image);
   const active = Math.min(1, board.rows.length - 1);
 
   return (

@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 import { posts } from "@/lib/content";
-import { siteUrl } from "@/lib/site";
+import { siteUrl, visibleSolutionPages } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date("2026-10-24");
   const pages = [
     "",
+    ...visibleSolutionPages.map((page) => page.href),
     "/privacy",
     "/terms",
     "/cookies",

@@ -25,69 +25,15 @@ body {
 
 ::selection { background: #f58634; color: #14110f; }
 
-.logo img,
-.logo-video {
-  height: 80px;
+.logo-mark {
+  display: block;
   width: auto;
-  max-width: none;
-  display: block;
+  height: 48px;
+  max-width: 120px;
   object-fit: contain;
 }
 
-.logo-video {
-  position: relative;
-  display: inline-grid;
-  align-items: center;
-  width: 121px;
-  height: 80px;
-}
-
-.logo-video .logo-fallback,
-.logo-video canvas {
-  grid-area: 1 / 1;
-  display: block;
-  object-fit: contain;
-}
-
-.logo-video .logo-fallback {
-  height: 100%;
-  width: 121px;
-  max-width: none;
-  opacity: 1;
-  transition: opacity 0.25s ease;
-}
-
-.logo-video canvas {
-  height: 80px;
-  width: 121px;
-  max-width: none;
-}
-
-.logo-video.is-ready .logo-fallback {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.logo-video.is-ready canvas {
-  opacity: 1;
-}
-
-.logo-video canvas {
-  opacity: 0;
-}
-
-.logo-video-src {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.site-footer .logo img,
-.site-footer .logo-video,
-.site-footer .logo-video .logo-fallback,
-.site-footer .logo-video canvas { height: 72px; }
+.site-footer .logo-mark { height: 44px; }
 
 .site-header.is-stuck,
 .site-header.is-open {

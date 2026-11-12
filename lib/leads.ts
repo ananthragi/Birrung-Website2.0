@@ -1,34 +1,49 @@
-export const LEADS_API = "https://mysign.au/signagebackend/api";
-export const LEAD_SCREENS = "1-5";
-export const LEAD_CAPTCHA_TOKEN = "XXXX.DUMMY.TOKEN.XXXX";
+export const TRAIL_API = process.env.TRAIL_API_URL ?? "https://birrung.com.au/trail";
 
-export type LeadKind = "demo" | "trial";
+export type LeadKind = "contact" | "demo" | "trial";
+
+export const REQUEST_TYPE: Record<LeadKind, string> = {
+  contact: "contact_us",
+  demo: "free_demo",
+  trial: "trail",
+};
 
 export type LeadPayload = {
-  name: string;
-  email: string;
-  phone: string;
-  company: string;
-  state: string;
-  message: string;
-  screens: string;
-  captchaToken: string;
+  Name: string;
+  Email: string;
+  Phone: string;
+  Company: string;
+  State: string;
+  Message: string;
 };
 
 export type LeadResponse = {
-  success?: boolean;
+  status?: boolean;
   message?: string;
+  errors?: Record<string, string>;
 };
 
+export class LeadSubmitError extends Error {
+  fieldErrors?: Record<string, string>;
+
+  constructor(message: string, fieldErrors?: Record<string, string>) {
+    super(message);
+    this.name = "LeadSubmitError";
+    this.fieldErrors = fieldErrors;
+  }
+}
+
 export async function submitLead(kind: LeadKind, payload: LeadPayload): Promise<LeadResponse> {
-  const path = kind === "trial" ? "trials" : "demos";
-  const response = await fetch(`/api/${path}`, {
+  const response = await fetch("/trail", {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      ...payload,
+      request_type: REQUEST_TYPE[kind],
+    }),
   });
 
   let data: LeadResponse = {};
@@ -38,8 +53,8 @@ export async function submitLead(kind: LeadKind, payload: LeadPayload): Promise<
     data = {};
   }
 
-  if (!response.ok || data.success === false) {
-    throw new Error(data.message || "Something went wrong. Please try again.");
+  if (!response.ok || data.status === false) {
+    throw new LeadSubmitError(data.message || "Something went wrong. Please try again.", data.errors);
   }
 
   return data;

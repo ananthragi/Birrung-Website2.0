@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LogoMark } from "@/components/logo-mark";
 import { credits } from "@/lib/content";
-import { email, phoneDisplay, phoneHref, states } from "@/lib/site";
+import { email, phoneDisplay, phoneHref, states, visibleSolutionPages } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -38,7 +38,12 @@ export function Footer() {
             <ul>
               <li><a href="/#solution">Features</a></li>
               <li><a href="/#pricing">Pricing</a></li>
-              <li><a href="/#venues">Case studies</a></li>
+              <li><a href="/#venues">Solutions</a></li>
+              {/* {visibleSolutionPages.map((page) => (
+                <li key={page.href}>
+                  <Link href={page.href}>{page.label}</Link>
+                </li>
+              ))} */}
               <li><a href="/#analytics">Analytics</a></li>
               <li><a href="/#reviews">Reviews</a></li>
             </ul>

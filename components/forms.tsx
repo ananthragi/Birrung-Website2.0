@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { LEAD_CAPTCHA_TOKEN, LEAD_SCREENS, submitLead } from "@/lib/leads";
-import { email, states } from "@/lib/site";
+import { LeadSubmitError, submitLead } from "@/lib/leads";
+import { states } from "@/lib/site";
 
 type Kind = "contact" | "demo" | "trial";
 
@@ -14,8 +14,8 @@ const copy: Record<
     subject: "Birrung website enquiry",
     submit: "Send message",
     button: "btn btn-ink",
-    title: "Your message is ready to send.",
-    body: "If your email app did not open, write to",
+    title: "Message sent.",
+    body: "Thanks for reaching out. We will contact you soon.",
     sending: "Sending…",
   },
   demo: {
@@ -38,11 +38,32 @@ const copy: Record<
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const FIELD_FILL: Record<string, string> = {
+  Name: "Please fill name",
+  Email: "Please fill email",
+  Phone: "Please fill Phone",
+  Company: "Please fill company",
+  State: "Please select state",
+  Message: "Please fill message",
+};
+
+function fillMessage(name: string) {
+  return FIELD_FILL[name] ?? `Please fill ${name.toLowerCase()}`;
+}
+
+function normalizeServerErrors(errors: Record<string, string>) {
+  const next: Record<string, string> = {};
+  for (const [key, value] of Object.entries(errors)) {
+    next[key] = /required/i.test(value) ? fillMessage(key) : value;
+  }
+  return next;
+}
+
 function messageFor(field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
   const value = field.value.trim();
-  if (field.required && !value) return "Please fill this in.";
-  if (field.type === "email" && value && !emailPattern.test(value)) return "Enter a valid email address.";
-  if (field.type === "tel" && value && value.replace(/\D/g, "").length < 8) return "Enter a phone number we can call.";
+  if (field.required && !value) return fillMessage(field.name);
+  if (field.type === "email" && value && !emailPattern.test(value)) return "Please enter a valid email address.";
+  if (field.type === "tel" && value && value.replace(/\D/g, "").length < 8) return "Please enter a valid phone number.";
   return "";
 }
 
@@ -57,14 +78,8 @@ export function EnquiryForm({ kind }: { kind: Kind }) {
   if (sent) {
     return (
       <div className="form-success">
-        <h3>{successMessage || text.title}</h3>
-        {kind === "contact" ? (
-          <p>
-            {text.body} <a href={`mailto:${email}`}>{email}</a> and we will reply shortly.
-          </p>
-        ) : (
-          <p>{text.body}</p>
-        )}
+        <h3>{text.title}</h3>
+        <p>{successMessage || text.body}</p>
       </div>
     );
   }
@@ -94,33 +109,23 @@ export function EnquiryForm({ kind }: { kind: Kind }) {
       return;
     }
 
-    if (kind === "contact") {
-      const lines: string[] = [];
-      new FormData(form).forEach((value, key) => {
-        if (key === "company_website") return;
-        lines.push(`${key}: ${String(value).trim()}`);
-      });
-      window.location.href = `mailto:${email}?subject=${encodeURIComponent(text.subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
-      setSent(true);
-      return;
-    }
-
     const data = new FormData(form);
     setPending(true);
     try {
       const result = await submitLead(kind, {
-        name: String(data.get("Name") ?? "").trim(),
-        email: String(data.get("Email") ?? "").trim(),
-        phone: String(data.get("Phone") ?? "").trim(),
-        company: String(data.get("Company") ?? "").trim(),
-        state: String(data.get("State") ?? "").trim(),
-        message: String(data.get("Message") ?? "").trim(),
-        screens: LEAD_SCREENS,
-        captchaToken: LEAD_CAPTCHA_TOKEN,
+        Name: String(data.get("Name") ?? "").trim(),
+        Email: String(data.get("Email") ?? "").trim(),
+        Phone: String(data.get("Phone") ?? "").trim(),
+        Company: String(data.get("Company") ?? "").trim(),
+        State: String(data.get("State") ?? "").trim(),
+        Message: String(data.get("Message") ?? "").trim(),
       });
       setSuccessMessage(result.message || text.title);
       setSent(true);
     } catch (error) {
+      if (error instanceof LeadSubmitError && error.fieldErrors) {
+        setErrors(normalizeServerErrors(error.fieldErrors));
+      }
       setFormError(error instanceof Error ? error.message : "Something went wrong. Please try again.");
     } finally {
       setPending(false);
@@ -204,6 +209,9 @@ function ContactFields({ errors, clear }: { errors: Record<string, string>; clea
           </select>
         </Field>
       </div>
+      <Field id="contact-company" name="Company" label="Company" error={errors.Company}>
+        <input id="contact-company" name="Company" type="text" autoComplete="organization" aria-invalid={Boolean(errors.Company)} aria-describedby="contact-company-err" onInput={() => clear("Company")} />
+      </Field>
       <Field id="contact-message" name="Message" label="Message" error={errors.Message}>
         <textarea id="contact-message" name="Message" required aria-invalid={Boolean(errors.Message)} aria-describedby="contact-message-err" onInput={() => clear("Message")} />
       </Field>

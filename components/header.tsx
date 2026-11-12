@@ -4,16 +4,18 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { LogoMark } from "@/components/logo-mark";
 import { OpenButton } from "@/components/open-button";
-import { nav } from "@/lib/site";
+import { nav, visibleSolutionPages } from "@/lib/site";
 
 export function Header() {
   const pathname = usePathname();
   const [stuck, setStuck] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [solutionsOpen, setSolutionsOpen] = useState(false);
   const solid = pathname !== "/" && !pathname.startsWith("/solution");
 
   useEffect(() => {
     setMenu(false);
+    setSolutionsOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -61,11 +63,50 @@ export function Header() {
           <span className="burger" aria-hidden="true" />
         </button>
         <nav id="site-nav" className="site-nav" aria-label="Primary">
-          {nav.map((item) => (
-            <a key={item.href} href={hrefFor(item.href)} onClick={() => setMenu(false)}>
-              {item.label}
-            </a>
-          ))}
+          {nav.map((item) =>
+            item.href === "solution" ? (
+              <div
+                className={solutionsOpen ? "nav-item is-open" : "nav-item"}
+                key={item.href}
+                onMouseEnter={() => setSolutionsOpen(true)}
+                onMouseLeave={() => setSolutionsOpen(false)}
+              >
+                <button
+                  className="nav-parent"
+                  type="button"
+                  aria-expanded={solutionsOpen}
+                  aria-controls="solution-menu"
+                  onClick={() => {
+                    if (window.matchMedia("(min-width: 900px)").matches) return;
+                    setSolutionsOpen((open) => !open);
+                  }}
+                >
+                  {item.label}
+                </button>
+                <div className="nav-sub" id="solution-menu">
+                  <div className="nav-sub-panel">
+                    <a href={hrefFor("venues")} onClick={() => setMenu(false)}>
+                      Overview
+                    </a>
+                    {visibleSolutionPages.map((page) => (
+                      <a
+                        key={page.href}
+                        href={page.href}
+                        aria-current={pathname === page.href ? "page" : undefined}
+                        onClick={() => setMenu(false)}
+                      >
+                        {page.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a key={item.href} href={hrefFor(item.href)} onClick={() => setMenu(false)}>
+                {item.label}
+              </a>
+            ),
+          )}
           <div className="nav-mobile-cta">
             <OpenButton className="btn btn-gold" modal="trial">
               Free Demo

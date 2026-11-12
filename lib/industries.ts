@@ -1,15 +1,22 @@
 import type { StaticImageData } from "next/image";
-import cafe from "@/images/au-cafe-2026.jpg";
 import churchAu from "@/images/au-church-2026.jpg";
 import library from "@/images/au-library-2026.jpg";
-import retail from "@/images/au-retail-2026.jpg";
-import storefront from "@/images/au-retail-window-2026.jpg";
 import campus from "@/images/eu-campus-2026.jpg";
 import churchEu from "@/images/eu-church-2026.jpg";
-import dining from "@/images/eu-dining-2026.jpg";
 import gym from "@/images/eu-gym-2026.jpg";
 import hospital from "@/images/eu-hospital-2026.jpg";
 import office from "@/images/eu-office-2026.jpg";
+import breakfast from "@/images/hospitality-breakfast.jpg";
+import lunch from "@/images/hospitality-lunch.jpg";
+import dinner from "@/images/hospitality-dinner.jpg";
+import pubTaps from "@/images/hospitality-pub-taps.jpg";
+import motel from "@/images/hospitality-motel.jpg";
+import cafeSpecials from "@/images/hospitality-cafe-specials.jpg";
+import takeawayCounter from "@/images/hospitality-takeaway-counter.jpg";
+import windowSpecials from "@/images/hospitality-window-specials.jpg";
+import retailStore from "@/images/retail-store-screens.jpg";
+import retailWindow from "@/images/retail-window-sale.jpg";
+import retailFloor from "@/images/retail-floor-screens.jpg";
 
 export type IconName = "tv" | "bolt" | "spark" | "login" | "calendar" | "bell" | "clock" | "pin" | "play";
 
@@ -25,13 +32,31 @@ export type Industry = {
   image: StaticImageData;
   alt: string;
   stage: {
-    boards: { chip: string; menu: string; rows: { name: string; when: string }[]; playing: string }[];
+    boards: {
+      chip: string;
+      menu: string;
+      rows: { name: string; when: string }[];
+      playing: string;
+      image?: StaticImageData;
+      side?: StaticImageData;
+    }[];
     side: StaticImageData;
     sideAlt: string;
   };
   statsHead?: { eyebrow: string; title: string; lede: string };
   stats: { value: number; decimals?: number; text: string; source?: string }[];
-  features: { tag: string; title: string; text: string; image: StaticImageData; alt: string; button?: string }[];
+  offline?: { title: string; lede: string; text: string; note: string };
+  useHardwareSection?: boolean;
+  features: {
+    tag: string;
+    title: string;
+    text: string;
+    image: StaticImageData;
+    alt: string;
+    button?: string;
+    beforeStats?: boolean;
+    images?: { image: StaticImageData; alt: string }[];
+  }[];
   templates?: { title: string; text: string };
   reviewsTitle?: string;
   whyTitle: string;
@@ -63,17 +88,20 @@ export const industries: Industry[] = [
     pageTitle: "Influence purchase decisions at the point of sale.",
     eyebrow: "RETAIL",
     title: "Retail",
-    lede: "Want the screens to do the talking for you and attract your customers? That’s where Birrung comes in handy; A smart professional digital signage software that you can control and monitor with ease, with out breaking a sweat",
+    lede: "Retail is a fast moving environment. Prices are subject to change with little/no prior notice. Promotions can last only a week and new stock arrives sooner than expected. Old posters will be irrelevant, printed signage cannot keep pace. It costs money to design, print and ship. Also reliant on busy staff to put it up correctly. The head office may not have full visibility of what each store is actually showing. This can lead to out of date prices, missed promotions and a brand that looks different from one shop to the next. \n\n Birrung solves this issue. You can control every screen in every store from one dashboard, using either a laptop or a smart device. A simple price change or new campaign can be live everywhere in minutes. Set promotions to start and end automatically, tailor content for each store and see what is playing where at a glance. No printing. No waiting. Deliver the right message to your customers at the right time.",
     heroPrimary: "Get Started",
     heroSecondary: "Request for Demo",
-    image: retail,
-    alt: "City Beach store at Garden City Booragoon, Perth, photographed in 2026",
+    useHardwareSection: true,
+    image: retailStore,
+    alt: "Premium clothing boutique with wall-mounted digital campaign screens",
     stage: {
       boards: [
         {
           chip: "Offer pushed to the floor",
           menu: "Shop floor",
           playing: "Window offer",
+          image: retailFloor,
+          side: retailWindow,
           rows: [
             { name: "New drop", when: "today" },
             { name: "Members", when: "20% off" },
@@ -85,6 +113,8 @@ export const industries: Industry[] = [
           chip: "Window playlist is live",
           menu: "Street window",
           playing: "Sale screen",
+          image: retailWindow,
+          side: retailStore,
           rows: [
             { name: "Street offer", when: "live" },
             { name: "Sale", when: "30% off" },
@@ -96,6 +126,8 @@ export const industries: Industry[] = [
           chip: "12 screens in sync",
           menu: "All shops",
           playing: "Floor loop",
+          image: retailStore,
+          side: retailFloor,
           rows: [
             { name: "Screens", when: "12 online" },
             { name: "Playlist", when: "floor" },
@@ -104,8 +136,8 @@ export const industries: Industry[] = [
           ],
         },
       ],
-      side: storefront,
-      sideAlt: "Country Road shop window with a digital poster, Booragoon, Perth, 2026",
+      side: retailWindow,
+      sideAlt: "Boutique storefront with a tall digital window sale display",
     },
     statsHead: {
       eyebrow: "On the shop floor",
@@ -124,9 +156,24 @@ export const industries: Industry[] = [
       {
         tag: "WINDOW BASED SIGNAGE",
         title: "Your Storefront, Reimagined and can speak something",
-        text: "Transform your walls or display windows into effective sales tools . Birrung helps you leverage a dynamic Digital Signage to grab attention, engage your audience and convert visitors into customers. Forget about traditional signage that may blend into the background. Just think about how you can capture the visitors' attention with vivid and appealing imagery. Maintaining your visuals is no less easy than displaying them. Maintaining your visuals is no less than as easy as providing them; just sign in to your account in a couple of clicks and you will have full access to managing one and even a hundred screens in a matter of minutes. This way, a person will not only remain flexible in terms of the offered messages but will also control what they demonstrate to their visitors.",
-        image: storefront,
-        alt: "Country Road shop window with a digital poster, Booragoon, Perth, 2026",
+        text: "Your shop front is the first thing your customers will see, so make sure they can't resist stopping by! Birrung allows you to create vibrant selling points using your shop windows, wall displays and in-store displays. With bright visuals, videos and animations you'll be able to really grab people's attention and entice them in to take a look at your latest offers. \n\n Updating is quick and easy. Login anytime to update your screen(s) and change your display in minutes. Create a new display for your weekend sale, highlight new stock by your entrance or add extra offers in your tills. You're in control of every customer viewing your product(s).",
+        image: retailWindow,
+        alt: "Luxury boutique window with a tall digital sale display facing the street",
+        beforeStats: true,
+        images: [
+          {
+            image: retailWindow,
+            alt: "Storefront window digital signage promoting a sale to passers-by",
+          },
+          {
+            image: retailStore,
+            alt: "In-store wall screens showing fashion campaigns across the boutique",
+          },
+          {
+            image: retailFloor,
+            alt: "Shop floor digital screens above clothing displays",
+          },
+        ],
       },
     ],
     whyTitle: "Why Birrung?",
@@ -144,54 +191,73 @@ export const industries: Industry[] = [
     ctaButton: "Start for free",
   },
   {
-    slug: "restaurants",
-    label: "Restaurants",
+    slug: "hospitality",
+    label: "Hospitality",
     pageTitle: "Digital Menu Management, Made Easy",
-    eyebrow: "HOSPITALITY & RESTAURANTS",
+    eyebrow: "HOSPITALITY",
     title: "Digital Menu Management, Made Easy",
-    lede: "Static menu boards do not change instantly; it's a long process . Static posters can be ignored. And as for those chalkboard special’s, some of your clients are convinced it's just decoration. What's the deal? Static content may not be seen and unseen content does not sell.\n\nBirrung puts you in control of dynamic digital signage that can actually capture attention.  Change your menu instantly, launch a promotion, withdraw products your choice. You can create a completely new atmosphere,  without printing anything or carrying USB. Gain more attention to your menu from clients thus more sales coming your way.",
+    lede: "Static menu boards do not change instantly; it can be a long process. Static posters can be ignored. And as for those chalkboard special’s, some of your clients are convinced it's just decoration. What's the deal? Static content may not be seen and we all know the fact that **“If it is not seen, it does not sell”**.\n\nBirrung puts you in control of dynamic digital signage that can actually capture attention. Change your message instantly, launch a promotion, withdraw products your choice, all **“just a click away”**. You can create a completely new atmosphere, without printing anything or carrying USB. **Centrally manage and monitor all your screens without human relaince**. Gain more attention to your menu from clients thus more sales coming your way.",
     heroPrimary: "Get started",
     heroSecondary: "Contact us",
-    image: cafe,
-    alt: "Dôme café in Byford, Western Australia, photographed in 2026",
+    image: breakfast,
+    alt: "Fast-casual counter with three digital menu boards above the service line",
     stage: {
       boards: [
         {
-          chip: "Menu updated",
-          menu: "House menu",
-          playing: "Dinner service",
+          chip: "Breakfast is live",
+          menu: "Breakfast",
+          playing: "Morning board",
+          image: breakfast,
+          side: lunch,
           rows: [
             { name: "Breakfast", when: "until 11" },
-            { name: "Lunch", when: "until 4" },
+            { name: "Lunch", when: "from 11" },
             { name: "Dinner", when: "from 5" },
-            { name: "Late", when: "until 10" },
+            { name: "Bar", when: "from 4" },
           ],
         },
         {
-          chip: "Specials are on",
-          menu: "Today's specials",
-          playing: "Chef's board",
-          rows: [
-            { name: "Soup", when: "of the day" },
-            { name: "Catch", when: "today" },
-            { name: "Combo", when: "+$4" },
-            { name: "Sold out", when: "none" },
-          ],
-        },
-        {
-          chip: "Day-part switched",
-          menu: "Sessions",
-          playing: "Lunch board",
+          chip: "Lunch service on",
+          menu: "Lunch",
+          playing: "Midday specials",
+          image: lunch,
+          side: dinner,
           rows: [
             { name: "Breakfast", when: "done" },
-            { name: "Lunch", when: "live" },
+            { name: "Lunch", when: "until 4" },
             { name: "Dinner", when: "queued" },
-            { name: "Bar", when: "from 5" },
+            { name: "Bar", when: "from 4" },
+          ],
+        },
+        {
+          chip: "Dinner menu live",
+          menu: "Dinner",
+          playing: "Evening service",
+          image: dinner,
+          side: pubTaps,
+          rows: [
+            { name: "Breakfast", when: "done" },
+            { name: "Lunch", when: "done" },
+            { name: "Dinner", when: "from 5" },
+            { name: "Bar", when: "open" },
+          ],
+        },
+        {
+          chip: "Tap list updated",
+          menu: "On tap",
+          playing: "Pub board",
+          image: pubTaps,
+          side: motel,
+          rows: [
+            { name: "Lager", when: "fresh" },
+            { name: "IPA", when: "2 left" },
+            { name: "Stout", when: "on" },
+            { name: "Cider", when: "chilled" },
           ],
         },
       ],
-      side: dining,
-      sideAlt: "Evening tables outside a restaurant in Spandau, Berlin, August 2026",
+      side: pubTaps,
+      sideAlt: "Pub bar with beer taps under digital drink special boards",
     },
     reviewsTitle: "What does our clients say",
     statsHead: {
@@ -207,25 +273,62 @@ export const industries: Industry[] = [
       { value: 35, text: "Reduction in perceived wait times for customers waiting in line to order." },
       { value: 29, text: "Increase in average order value when using digital menu boards over static ones." },
     ],
+    offline: {
+      title: "No Internet? No Problem!! Lets go Offline",
+      lede: "We understand certain retail venues who share common internet, food trucks or temporary pop up counters love to have digital signage but getting reliable internet connection can be a challenge. This is the most common issue we hear from customers even today. Birrung solves exactly the same issue.",
+      text: "**Birrung works offline.** Load your menu before you leave, plug the screen on site and you are ready. Next day or next event, your menu comes with you when you power on. That's peace of mind. You can play videos, animated content, whatever you feel like that will attract your customers. It's that simple. Load your menu before you leave, plug in a screen on site, and you're ready. When you move to the next market or festival, your menu comes with you.",
+      note: "Offline playback is subject to compatible screens or media players. Please talk to our team if you need further clarifications.",
+    },
     features: [
       {
         tag: "DYNAMIC MENUS",
         title: "Deal of the week or Special of the day..No Problem",
         text: "Nobody ever acted impulsively on purchasing something they could not see. That is why \"Eye Level is Buy Level\" has remained the golden rule of retail and hospitality for all eternity. If it is in their sights, then they will purchase it. If it is out of sight, then they won’t.\n\nWhether you are pitching your deal of the day, encouraging your customers to make the value combo decision, or making a desperate effort to sell off the last twelve portions of yesterday's special before they become today's headache, Birrung has got you sorted. Customize your displays dynamically, load an amazing still image or enticing video onto your display system, and see how sales increase magically without any printers or last-minute USB drives.",
-        image: cafe,
-        alt: "Dôme café terrace in Byford, Western Australia, 2026",
+        image: lunch,
+        alt: "Wooden-framed digital menu board promoting a burger combo in a restaurant",
         button: "Claim 14 day free",
+        beforeStats: true,
+        images: [
+          {
+            image: cafeSpecials,
+            alt: "Cafe digital board showing pastry and coffee specials",
+          },
+          {
+            image: takeawayCounter,
+            alt: "Shopping centre takeaway counter with digital menu boards",
+          },
+          {
+            image: windowSpecials,
+            alt: "Shop window digital signage promoting food specials",
+          },
+        ],
       },
-      {
-        tag: "DAY-PARTING",
-        title: "Need Day-part or Sessions, it’s no more a hassle",
-        text: "Using a  USB stick to keep your menu up to date? So old-school. So…2003.  In the time you spent searching for your USB stick (hint: it’s hiding behind the register), your breakfast menu turned into your dinner menu. Oops…\n\nBirrung can schedule your menu and can change automatically as per your schedule. This ensures you show everything when necessary as per your choice. Set it only once, never touch it again, and we beg you to destroy that USB drive.",
-        image: dining,
-        alt: "Evening tables outside a restaurant in Spandau, Berlin, August 2026",
-        button: "Get started",
-      },
+      // {
+      //   tag: "DAY-PARTING",
+      //   title: "Need Day-part or Sessions, it’s no more a hassle",
+      //   text: "Using a  USB stick to keep your menu up to date? So old-school. So…2003.  In the time you spent searching for your USB stick (hint: it’s hiding behind the register), your breakfast menu turned into your dinner menu. Oops…\n\nBirrung can schedule your menu and can change automatically as per your schedule. This ensures you show everything when necessary as per your choice. Set it only once, never touch it again, and we beg you to destroy that USB drive.",
+      //   image: breakfast,
+      //   alt: "Restaurant counter with ceiling-mounted digital menu boards for dayparts",
+      //   button: "Get started",
+      // },
+      // {
+      //   tag: "PUBS & BARS",
+      //   title: "Tap lists that keep up with the pour",
+      //   text: "Happy hour, guest taps, and sold-out lines change fast. Put the live pour list on every screen in the bar so guests see what is on tap before they order.\n\nSwap a beer, push a special, or clear a keg from one login. No reprinting chalkboard menus and no staff rewriting the board mid-service.",
+      //   image: pubTaps,
+      //   alt: "Beer taps under digital pub special boards",
+      //   button: "Get started",
+      // },
+      // {
+      //   tag: "MOTELS & LODGING",
+      //   title: "Reception screens that welcome guests",
+      //   text: "Motel and hotel reception is the first screen guests meet. Show check-in times, local tips, breakfast hours, and tonight's dining specials without printing a new flyer every morning.\n\nUpdate every lobby display from one place, whether you run a single motel or a small hospitality group.",
+      //   image: motel,
+      //   alt: "Motel reception desk with a digital welcome and dining specials screen",
+      //   button: "Get started",
+      // },
     ],
-    whyTitle: "Why Restaurants Love Birrung",
+    whyTitle: "Why Hospitality Loves Birrung",
     whyLede: "Built for speed, appetite, and total control.",
     reasons: [
       { icon: "bolt", title: "Instant Updates", text: "Change prices, add items, or mark items sold out in real-time." },

@@ -431,6 +431,14 @@ p { text-wrap: pretty; }
   margin-top: 1.5rem;
 }
 
+.hero-cta-desktop { display: none; }
+.hero-cta-mobile { display: inline-flex; }
+
+@media (min-width: 900px) {
+  .hero-cta-desktop { display: inline-flex; }
+  .hero-cta-mobile { display: none; }
+}
+
 .hero-note {
   margin: 1rem 0 0;
   color: rgba(255, 252, 247, 0.62);
@@ -1098,6 +1106,34 @@ p { text-wrap: pretty; }
   color: #fff;
 }
 
+.venue-go {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--night);
+}
+
+.venue-go svg { width: 0.95rem; height: 0.95rem; }
+
+a.venue-card {
+  display: block;
+  height: 100%;
+  color: #fff;
+  text-decoration: none;
+}
+
+a.venue-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.venue-card.is-static { cursor: default; }
+
 .venue-card p { margin: 0.2rem 0 0; color: rgba(255, 252, 247, 0.86); }
 
 .v-worship img { object-position: center 40%; }
@@ -1395,7 +1431,7 @@ p { text-wrap: pretty; }
   white-space: nowrap;
 }
 
-.field { position: relative; padding-bottom: 0.95rem; }
+.field { position: relative; padding-bottom: 1.15rem; }
 
 .field label {
   display: block;
@@ -1416,6 +1452,28 @@ p { text-wrap: pretty; }
   border-radius: 0;
   padding: 0.65rem 0;
   font-size: 1rem;
+  outline: none;
+  box-shadow: none;
+}
+
+.field input:focus,
+.field input:focus-visible,
+.field select:focus,
+.field select:focus-visible,
+.field textarea:focus,
+.field textarea:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border-bottom-color: var(--gold);
+}
+
+.field.is-error input:focus,
+.field.is-error input:focus-visible,
+.field.is-error select:focus,
+.field.is-error select:focus-visible,
+.field.is-error textarea:focus,
+.field.is-error textarea:focus-visible {
+  border-bottom-color: var(--clay);
 }
 
 .field textarea { min-height: 120px; resize: vertical; }
@@ -1865,6 +1923,7 @@ p { text-wrap: pretty; }
   .tile:hover { border-color: rgba(226, 163, 34, 0.75); }
   .venue-card img { transition: transform 0.6s ease; }
   .venue-card:hover img { transform: scale(1.05); }
+  .venue-card.is-static:hover img { transform: none; }
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -98,7 +98,7 @@ export function WhyBirrung() {
             Free Demo
           </OpenButton>
           <a className="btn btn-line" href="https://birrung.com.au/login" target="_blank" rel="noopener noreferrer">
-            Login
+            Log in
           </a>
         </div>
       </div>
