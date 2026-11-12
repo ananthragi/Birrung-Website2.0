@@ -42,42 +42,42 @@ export type SolutionPage = {
 };
 
 export const solutionPages: SolutionPage[] = [
-  { slug: "retail", href: "/solution/retail", label: "Retail", show: true },
+  { slug: "retail", href: "/solution/retail", label: "Retail", show: false },
   {
     slug: "hospitality",
     href: "/solution/hospitality",
     label: "Hospitality",
-    show: true,
+    show: false,
   },
   {
     slug: "corporate",
     href: "/solution/corporate",
     label: "Corporate offices",
-    show: true,
+    show: false,
   },
   {
     slug: "healthcare",
     href: "/solution/healthcare",
     label: "Healthcare",
-    show: true,
+    show: false,
   },
   {
     slug: "education",
     href: "/solution/education",
     label: "Education",
-    show: true,
+    show: false,
   },
   {
     slug: "gyms",
     href: "/solution/gyms",
     label: "Gyms and fitness",
-    show: true,
+    show: false,
   },
   {
     slug: "worship",
     href: "/solution/worship",
     label: "Places of worship",
-    show: true,
+    show: false,
   },
 ];
 
