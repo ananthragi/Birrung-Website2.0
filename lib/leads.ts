@@ -1,5 +1,4 @@
-export const TRAIL_API =
-  process.env.TRAIL_API_URL ?? "https://birrung.com.au/trail";
+export const TRAIL_API = "https://birrung.com.au/trail";
 
 export type LeadKind = "contact" | "demo" | "trial";
 
@@ -38,7 +37,7 @@ export async function submitLead(
   kind: LeadKind,
   payload: LeadPayload
 ): Promise<LeadResponse> {
-  const response = await fetch("/api/trail", {
+  const response = await fetch(TRAIL_API, {
     method: "POST",
     headers: {
       Accept: "application/json",
