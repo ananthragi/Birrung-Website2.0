@@ -1,4 +1,5 @@
-export const TRAIL_API = process.env.TRAIL_API_URL ?? "https://birrung.com.au/trail";
+export const TRAIL_API =
+  process.env.TRAIL_API_URL ?? "https://birrung.com.au/trail";
 
 export type LeadKind = "contact" | "demo" | "trial";
 
@@ -33,8 +34,11 @@ export class LeadSubmitError extends Error {
   }
 }
 
-export async function submitLead(kind: LeadKind, payload: LeadPayload): Promise<LeadResponse> {
-  const response = await fetch("/trail", {
+export async function submitLead(
+  kind: LeadKind,
+  payload: LeadPayload
+): Promise<LeadResponse> {
+  const response = await fetch("/api/trail", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -54,7 +58,10 @@ export async function submitLead(kind: LeadKind, payload: LeadPayload): Promise<
   }
 
   if (!response.ok || data.status === false) {
-    throw new LeadSubmitError(data.message || "Something went wrong. Please try again.", data.errors);
+    throw new LeadSubmitError(
+      data.message || "Something went wrong. Please try again.",
+      data.errors
+    );
   }
 
   return data;
